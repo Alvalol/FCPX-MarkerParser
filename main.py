@@ -8,25 +8,33 @@ import xml.etree.ElementTree as ET
 import smtplib
 import sys
 import os
-import yaml
+import json
+
 from email.mime.text import MIMEText
 from Config import *
 
+if os.stat("Config.py").st_size ==0:
+    config = {}
 
-if not bool(config):
     print "Welcome to your first run of FCPXParser, please enter the configuration information"
-    config['useremail'] = str(raw_input("Enter your email\n"))
+    config['useremail'] = str(raw_input("Enter your gmail account\n"))
+    while "@gmail.com" not in config['useremail']:
+        config['useremail'] = str(raw_input("Enter your gmail account\n"))
+
+
     config['yourname'] = str(raw_input("Enter your name\n"))
     config['recipientName'] = str(raw_input("Enter your recipient's name\n"))
     config['directory'] = str(raw_input("Enter the directory as such /PATH1/PATH2/.../PATH/\n"))
     config['file'] = str(raw_input("Enter the name of the file. Exclude .fcpx extension\n"))
-    stream = file('Config.py', 'w')
-    yaml.dump(config,stream)
-    stream.close()
-
+    with open("Config.py",'w') as f: f.write(json.dumps(config))
+    f.close()
+    with open("Config.py","r") as f:
+        config = json.load(f)
+    f.close()
 else:
-    stream = file('Config.py', 'r')
-    config = yaml.load(stream)
+    with open("Config.py","r") as f:
+        config = json.load(f)
+    f.close()
 
 
 
@@ -88,7 +96,7 @@ def sendMail():
 
 Sendmail = raw_input("Send e-mail? Y/N only\n").lower()
 if Sendmail == "y":
-    password = raw_input("Enter password\n")
+    password = raw_input("Enter password for " + config['useremail'] + "\n")
     sendMail()
 elif Sendmail == "n":
     print "A file named E-Mail has been made at " + config['directory'] + config['file']
