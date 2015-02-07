@@ -9,13 +9,12 @@ import smtplib
 import sys
 import os
 import json
-
 from email.mime.text import MIMEText
 from Config import *
+import GUI
 
 if os.stat("Config.py").st_size ==0:
     config = {}
-
     print "Welcome to your first run of FCPXParser, please enter the configuration information"
     config['useremail'] = str(raw_input("Enter your gmail account\n"))
     while "@gmail.com" not in config['useremail']:
