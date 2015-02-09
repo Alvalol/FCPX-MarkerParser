@@ -11,7 +11,7 @@ import os
 import json
 from email.mime.text import MIMEText
 from Config import *
-import GUI
+#import GUI
 
 if os.stat("Config.py").st_size ==0:
     config = {}
@@ -34,8 +34,6 @@ else:
     with open("Config.py","r") as f:
         config = json.load(f)
     f.close()
-
-
 
 tree = ET.parse(config['directory'] + config['file'] + ".fcpxml")
 root = tree.getroot()
