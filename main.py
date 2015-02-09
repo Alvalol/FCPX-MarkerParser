@@ -42,33 +42,31 @@ OutputFile = open(config['directory'] + 'E-mail.txt','w+')
 
 #Goes down the element tree and initializes startValue
 video = root.find('project').find('sequence').find('spine').find('video')
-startValue =  eval(video.get('start').replace('s',''))
+startValue =  ast.literal_eval(video.get('start').replace('s',''))
 
-tempmarkers = []
 markersNames = []
 projectName = root.find('project').get('name')
 
 
 for marker in video.findall('marker'):
-    tempmarkers.append(marker.get('start')), \
+    tempmarkers.append(marker.get('start'))
     markersNames.append(marker.get('value'))
 
 cleanMarkers = []
-for i in tempmarkers:
+for i in markers:
     i = i.replace('s','')
-    cleanMarkers.append(eval(i))
-del tempmarkers
+    markers.append(ast.literal_eval(i))
 
-OutputFile.write("Hello " + config['recipientName'] +  " here\'s " + projectName +  "\'s project." + "\n\n")
 
+OutputFile.write("Hello " + config['recipientName'] +  " here's " + projectName +  "'s project." + "\n\n")
 
 
 stufftoWrite = []
-for i in range(len(cleanMarkers)):
+for i in enumerate(cleanMarkers, start=0):
     stufftoWrite.append(((markersNames[i])) +  " :  " + ((str(datetime.timedelta(seconds=(cleanMarkers[i]-startValue))))))
 
 
-for i in range(len(stufftoWrite)):
+for i in enumerate(stufftoWrite, start=0):
     OutputFile.write(str(stufftoWrite[i]+ "\n"))
 OutputFile.write("\n\nThanks, " + config['yourname'])
 OutputFile.close()
