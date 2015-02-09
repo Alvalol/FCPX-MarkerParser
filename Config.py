@@ -1,1 +1,0 @@
-{"yourname": "Alvaro", "recipientName": "Rob", "useremail": "soadzombi@gmail.com", "directory": "/Users/alvaros/Desktop/", "file": "Micheline & Patrick"}
