@@ -20,7 +20,6 @@ if os.stat("Config.py").st_size ==0:
     while "@gmail.com" not in config['useremail']:
         config['useremail'] = str(raw_input("Enter your gmail account\n"))
 
-
     config['yourname'] = str(raw_input("Enter your name\n"))
     config['recipientName'] = str(raw_input("Enter your recipient's name\n"))
     config['directory'] = str(raw_input("Enter the directory as such /PATH1/PATH2/.../PATH/\n"))
